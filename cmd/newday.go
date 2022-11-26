@@ -11,7 +11,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// newdayCmd represents the newday command
 var newdayCmd = &cobra.Command{
 	Use:   "newday",
 	Short: "Initializes a new day package",
