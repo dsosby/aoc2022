@@ -1,6 +1,5 @@
 /*
 Copyright © 2022 David Sosby <dsosby@gmail.com>
-
 */
 package main
 
