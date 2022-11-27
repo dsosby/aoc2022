@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+  "os/exec"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -30,6 +31,7 @@ var rootCmd = &cobra.Command{
 		}
 	},
 	Run: func(cmd *cobra.Command, args []string) {
+    // TODO Look at files to figure out which is latest -- can just sort I think
 		day := 1
 
 		if len(args) == 1 {
@@ -42,7 +44,19 @@ var rootCmd = &cobra.Command{
 			day = argday
 		}
 
-		fmt.Println("Running day", day)
+    packageName := fmt.Sprintf("day%02d/day.go", day)
+    runCmd := exec.Command("go", "run", packageName)
+    runCmd.Stdout = os.Stdout
+
+    isSecond, _ := cmd.Flags().GetBool("second")
+
+    if isSecond {
+      runCmd.Args = append(runCmd.Args, "--second")
+    }
+
+    if runErr := runCmd.Run(); runErr != nil {
+      panic(runErr)
+    }
 	},
 }
 
@@ -54,4 +68,5 @@ func Execute() {
 }
 
 func init() {
+  rootCmd.Flags().BoolP("second", "s", false, "-s to run Problem2")
 }

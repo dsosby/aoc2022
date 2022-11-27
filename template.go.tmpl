@@ -1,13 +1,23 @@
-package day
+package main
 
 import (
   "fmt"
+  "os"
 )
 
+func main() {
+  usePart2 := len(os.Args) > 1 && os.Args[1] == "--second"
+  if (usePart2) {
+    Problem2()
+  } else {
+    Problem1()
+  }
+}
+
 func Problem1() {
-  fmt.Println("Solution")
+  fmt.Println("Solution One")
 }
 
 func Problem2() {
-  fmt.Println("Solution")
+  fmt.Println("Solution Two")
 }
