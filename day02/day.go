@@ -91,7 +91,7 @@ func getToPlay(them, strategy byte) byte {
 	switch strategy {
 	case 'X': //lose
 		switch them {
-		case 'A':   // rock
+		case 'A': // rock
 			return 'Z' // scissors
 		case 'B':
 			return 'X'
@@ -123,8 +123,6 @@ func getToPlay(them, strategy byte) byte {
 
 func (p *Play) getPlannedScore() int {
 	toPlay := getToPlay(p.them, p.you)
-
-  fmt.Printf("%c,%c is the strategy, you should play %c\n", p.them, p.you, toPlay)
 
 	strategyGame := Play{
 		them: p.them,
