@@ -17,17 +17,25 @@ func main() {
 
 func Problem1() {
 	entries := readEntries()
-  total := 0
+	total := 0
 
-  for _, play := range entries {
-    total += play.getScore()
-  }
+	for _, play := range entries {
+		total += play.getScore()
+	}
 
-  fmt.Println(total)
+	fmt.Println(total)
 }
 
 func Problem2() {
-	fmt.Println("Solution Two")
+	// X = lose, Y = draw, Z = win
+	entries := readEntries()
+	total := 0
+
+	for _, play := range entries {
+		total += play.getPlannedScore()
+	}
+
+	fmt.Println(total)
 }
 
 type Play struct {
@@ -71,6 +79,60 @@ func (p *Play) outcomeScore() int {
 func (p *Play) getScore() int {
 	shapeScore := shapeScore(rune(p.you))
 	winScore := p.outcomeScore()
+	return shapeScore + winScore
+}
+
+// a, x == rock
+// b, y == paper
+// c, z == scissors
+// X = lose, Y = draw, Z = win
+func getToPlay(them, strategy byte) byte {
+	// Probably could do some maths here
+	switch strategy {
+	case 'X': //lose
+		switch them {
+		case 'A':   // rock
+			return 'Z' // scissors
+		case 'B':
+			return 'X'
+		case 'C':
+			return 'Y'
+		}
+	case 'Y': // Draw
+		switch them {
+		case 'A':
+			return 'X'
+		case 'B':
+			return 'Y'
+		case 'C':
+			return 'Z'
+		}
+	case 'Z': // Win
+		switch them {
+		case 'A': // rock
+			return 'Y' // paper
+		case 'B': // paper
+			return 'Z' // scissors
+		case 'C': // scissors
+			return 'X' // rock
+		}
+	}
+
+	panic("Bad play")
+}
+
+func (p *Play) getPlannedScore() int {
+	toPlay := getToPlay(p.them, p.you)
+
+  fmt.Printf("%c,%c is the strategy, you should play %c\n", p.them, p.you, toPlay)
+
+	strategyGame := Play{
+		them: p.them,
+		you:  toPlay,
+	}
+
+	shapeScore := shapeScore(rune(strategyGame.you))
+	winScore := strategyGame.outcomeScore()
 	return shapeScore + winScore
 }
 
