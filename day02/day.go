@@ -43,8 +43,8 @@ type Play struct {
 	you  byte
 }
 
-func shapeScore(you rune) int {
-	switch you {
+func shapeScore(shape byte) int {
+	switch shape {
 	case 'X':
 		return 1
 	case 'Y':
@@ -77,7 +77,7 @@ func (p *Play) outcomeScore() int {
 }
 
 func (p *Play) getScore() int {
-	shapeScore := shapeScore(rune(p.you))
+	shapeScore := shapeScore(p.you)
 	winScore := p.outcomeScore()
 	return shapeScore + winScore
 }
@@ -86,7 +86,10 @@ func (p *Play) getScore() int {
 // b, y == paper
 // c, z == scissors
 // X = lose, Y = draw, Z = win
-func getToPlay(them, strategy byte) byte {
+func (p *Play) getPlay() byte {
+  strategy := p.you
+  them := p.them
+
 	// Probably could do some maths here
 	switch strategy {
 	case 'X': //lose
@@ -122,14 +125,14 @@ func getToPlay(them, strategy byte) byte {
 }
 
 func (p *Play) getPlannedScore() int {
-	toPlay := getToPlay(p.them, p.you)
+	toPlay := p.getPlay()
 
 	strategyGame := Play{
 		them: p.them,
 		you:  toPlay,
 	}
 
-	shapeScore := shapeScore(rune(strategyGame.you))
+	shapeScore := shapeScore(strategyGame.you)
 	winScore := strategyGame.outcomeScore()
 	return shapeScore + winScore
 }
