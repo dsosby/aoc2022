@@ -1,3 +1,4 @@
+# Part 1
 Geez.... Go likes iteration and mutation. I freaking hate it.
 Rust?
 
@@ -7,3 +8,16 @@ Want to get the keys out of map? Just write another GD loop
 Surely there's an easier way to get these stack traces readable?
 
 Off by one... I've had too many beers for this.
+
+# Part 2
+These elves are always causing shit. Santa needs more reliable workers.
+
+Do we have chunking loops?
+
+## Giving up
+I was trying to use only the std library for the first week...but too basic for my tastes.
+
+I am flexing the rules a bit, and pulling in the 1.18 experimental package for generic operations.
+
+This makes golang less of a toy.
+
