@@ -105,7 +105,7 @@ func common(left, right []rune) []rune {
 }
 
 func priority(commonRune rune) int {
-  pri := 0
+	pri := 0
 
 	if commonRune >= 'A' && commonRune <= 'Z' {
 		pri = int(commonRune) - 65 + 27
@@ -113,7 +113,7 @@ func priority(commonRune rune) int {
 		pri = int(commonRune) - 97 + 1
 	}
 
-  return pri
+	return pri
 }
 
 // Stolen from SO - https://stackoverflow.com/questions/35179656/slice-chunking-in-go

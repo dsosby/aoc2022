@@ -87,8 +87,8 @@ func (p *Play) getScore() int {
 // c, z == scissors
 // X = lose, Y = draw, Z = win
 func (p *Play) getPlay() byte {
-  strategy := p.you
-  them := p.them
+	strategy := p.you
+	them := p.them
 
 	// Probably could do some maths here
 	switch strategy {
