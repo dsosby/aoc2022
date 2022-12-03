@@ -14,10 +14,21 @@ These elves are always causing shit. Santa needs more reliable workers.
 
 Do we have chunking loops?
 
-## Giving up
+## Using /x/exp
 I was trying to use only the std library for the first week...but too basic for my tastes.
 
 I am flexing the rules a bit, and pulling in the 1.18 experimental package for generic operations.
 
 This makes golang less of a toy.
 
+## Why do we not have Set?
+
+Me: "Mom can we have Sets?"
+Go: "We've got Sets at home!"
+Sets at Home:
+
+```go
+	iAmSeT := map[rune]struct{}{}
+	iAmSeT['A'] = struct{}{}
+	_, has := iAmSeT['A']
+```
