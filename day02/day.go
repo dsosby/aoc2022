@@ -1,9 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
+
+	util "github.com/dsosby/aoc2022/pkg"
 )
 
 func main() {
@@ -138,26 +139,14 @@ func (p *Play) getPlannedScore() int {
 }
 
 func readEntries() []Play {
-	file, fileErr := os.Open("day02/input.txt")
-	if fileErr != nil {
-		panic(fileErr)
-	}
+  var entries []Play
 
-	defer file.Close()
+  for _, line := range util.ReadLines("day02/input.txt") {
+    entries = append(entries, Play{
+      them: line[0],
+      you: line[2],
+    })
+  }
 
-	scanner := bufio.NewScanner(file)
-
-	entries := make([]Play, 0)
-
-	for scanner.Scan() {
-		line := scanner.Text()
-		entry := Play{
-			them: line[0],
-			you:  line[2],
-		}
-
-		entries = append(entries, entry)
-	}
-
-	return entries
+  return entries
 }
