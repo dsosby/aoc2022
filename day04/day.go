@@ -66,10 +66,13 @@ func (r *Range) Contains(other *Range) bool {
 // Determines if the other Range overlaps at all (inclusive)
 // with the parent Range.
 func (r *Range) Overlaps(other *Range) bool {
+  // Lots of comparisons, could short-circuit them or constrain the
+  // ranges and use some bitmap technique?
+  eitherContains := r.Contains(other) || other.Contains(r)
 	startsWithin := other.Begin >= r.Begin && other.Begin <= r.End
 	endsWithin := other.End >= r.Begin && other.End <= r.End
 
-	return startsWithin || endsWithin
+	return eitherContains || startsWithin || endsWithin
 }
 
 func Problem1() int {
