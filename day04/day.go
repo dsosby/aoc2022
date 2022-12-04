@@ -12,9 +12,9 @@ import (
 func main() {
 	usePart2 := len(os.Args) > 1 && os.Args[1] == "--second"
 	if usePart2 {
-		Problem2()
+		fmt.Println(Problem2())
 	} else {
-		Problem1()
+		fmt.Println(Problem1())
 	}
 }
 
@@ -72,7 +72,7 @@ func (r *Range) Overlaps(other *Range) bool {
 	return startsWithin || endsWithin
 }
 
-func Problem1() {
+func Problem1() int {
 	// Input is pairs of section ranges, inclusive
 	// e.g. 2-4,6-8
 	pairs := make([]*Assignments, 0, 1)
@@ -88,10 +88,10 @@ func Problem1() {
 		}
 	}
 
-	fmt.Println(sum)
+  return sum
 }
 
-func Problem2() {
+func Problem2() int {
 	// Same as problem 1, but instead of contains use overlaps
 	pairs := make([]*Assignments, 0, 1)
 	for _, line := range util.ReadLines("day04/input.txt") {
@@ -107,5 +107,5 @@ func Problem2() {
 		}
 	}
 
-	fmt.Println(sum)
+  return sum
 }
