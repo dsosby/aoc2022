@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"regexp"
-	"strconv"
 
 	util "github.com/dsosby/aoc2022/pkg"
 )
@@ -28,31 +26,14 @@ type Assignments struct {
 	Second Range
 }
 
-func NewAssignments(line string) *Assignments {
-	// Simplified -- they are all just ints so pick them out in order
-	lineRegexp := regexp.MustCompile(`\d+`)
-	intLikes := lineRegexp.FindAll([]byte(line), 4)
+func ParseAssignments(input string) *Assignments {
+	assignments := Assignments{}
 
-	ints := make([]int, 4)
-	for i, intLike := range intLikes {
-		val, err := strconv.Atoi(string(intLike[:]))
-		if err != nil {
-			panic(err)
-		}
-
-		ints[i] = val
-	}
-
-	assignments := Assignments{
-		First: Range{
-			Begin: ints[0],
-			End:   ints[1],
-		},
-		Second: Range{
-			Begin: ints[2],
-			End:   ints[3],
-		},
-	}
+	fmt.Sscanf(input, "%d-%d,%d-%d",
+		&assignments.First.Begin,
+		&assignments.First.End,
+		&assignments.Second.Begin,
+		&assignments.Second.End)
 
 	return &assignments
 }
@@ -66,9 +47,9 @@ func (r *Range) Contains(other *Range) bool {
 // Determines if the other Range overlaps at all (inclusive)
 // with the parent Range.
 func (r *Range) Overlaps(other *Range) bool {
-  // Lots of comparisons, could short-circuit them or constrain the
-  // ranges and use some bitmap technique?
-  eitherContains := r.Contains(other) || other.Contains(r)
+	// Lots of comparisons, could short-circuit them or constrain the
+	// ranges and use some bitmap technique?
+	eitherContains := r.Contains(other) || other.Contains(r)
 	startsWithin := other.Begin >= r.Begin && other.Begin <= r.End
 	endsWithin := other.End >= r.Begin && other.End <= r.End
 
@@ -80,7 +61,7 @@ func Problem1() int {
 	// e.g. 2-4,6-8
 	pairs := make([]*Assignments, 0, 1)
 	for _, line := range util.ReadLines("day04/input.txt") {
-		pairs = append(pairs, NewAssignments(line))
+		pairs = append(pairs, ParseAssignments(line))
 	}
 
 	// How many pairs fully contain each other?
@@ -91,24 +72,23 @@ func Problem1() int {
 		}
 	}
 
-  return sum
+	return sum
 }
 
 func Problem2() int {
 	// Same as problem 1, but instead of contains use overlaps
 	pairs := make([]*Assignments, 0, 1)
 	for _, line := range util.ReadLines("day04/input.txt") {
-		pairs = append(pairs, NewAssignments(line))
+		pairs = append(pairs, ParseAssignments(line))
 	}
 
 	// How many pairs fully contain each other?
-	// Could be more efficiently done as a bitmap, but faster to just refactor
 	sum := 0
 	for _, pair := range pairs {
-		if pair.First.Overlaps(&pair.Second) || pair.Second.Overlaps(&pair.First) {
+		if pair.First.Overlaps(&pair.Second) {
 			sum += 1
 		}
 	}
 
-  return sum
+	return sum
 }
